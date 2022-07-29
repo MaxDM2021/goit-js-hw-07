@@ -1,33 +1,34 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-console.log(galleryItems);
 
 const palettContainer = document.querySelector('.gallery');
 
-const cardsMarkup = createColorCardsMarkup(galleryItems);
+const cardsMarkup = createImageCardsMarkup(galleryItems);
 
 palettContainer.insertAdjacentHTML('beforeend', cardsMarkup);
 
 palettContainer.addEventListener('click', onPalettrContainerClick);
 
 // Эта фунция отвечает за созание разметки
-function createColorCardsMarkup (galleryItems) { 
+
+function createImageCardsMarkup (galleryItems) { 
     return galleryItems.map(({preview, original, description}) => {
     return `
-    <div class="gallery__item">
-    <a class="gallery__link" href="${original}">
-      <img
-        class="gallery__image"
-        src="${preview}"
-        data-source="${original}"
-        alt="${description}"
-      />
-    </a>
-  </div>
+   <div class="gallery__item">
+  <a class="gallery__link" href="${original}">
+  <img
+    class="gallery__image"
+    src="${preview}"
+    data-source="${original}"
+    alt="${description}"
+  />
+</a>
+</div>
     `;
     }).join('');
     }
+
 
     const refs = {
         openModalBtn: document.querySelector('.gallery__link'),
@@ -35,39 +36,118 @@ function createColorCardsMarkup (galleryItems) {
         backdrop: document.querySelector('.gallery__item'),
     };
     
-    refs.openModalBtn.addEventListener('click', onOpenModal);
-    refs. closeModalBtn.addEventListener('click', onCloseModal);
+    refs.openModalBtn.addEventListener('click', onOpenOriginalImage);
+    refs. closeModalBtn.addEventListener('click', onCloseOriginalImage);
     refs.backdrop.addEventListener('click', onBackdropClick);
 
 
-    function onOpenModal () {
-        window.addEventListener('click', onClickPress );
-        document.body.classList.add('show-modal');
+    function onOpenOriginalImage (event) {
+      event.preventDefault();
+
+      if (event.target.classList.contains('gallery__image')){
+        const instanse = basicLigtbox.create(
+          `<img src="${event.target.dataset.sourse} width="800" height="600">`
+        );
+        instanse.classList.add('instanse__image')
+        instanse.show()
+      }
     }
+   
+    function onCloseOriginalImage (event) {
+      window.removeEventListener('click', onClickPress );
+      document.body.classList.remove('instanse__image');
+
+  }
+
+ 
+
+
     
-    function onCloseModal () {
-        window.removeEventListener('click', onClickPress );
-        document.body.classList.remove('show-modal');
-    }
+    // function onBackdropClick(event) {
+    //     console.log('Клик по backdrop')
+    //     console.log(event.currentTarget)
+    //     console.log(event.target);
     
-    function onBackdropClick(event) {
-        console.log('Клик по backdrop')
-        console.log(event.currentTarget)
-        console.log(event.target);
+    //     if (event.currentTarget === event.target) {
+    //         console.log('Кликнули именно в бекдроп!!!')
+    //         onCloseModal();
+    //     }
+    // }
     
-        if (event.currentTarget === event.target) {
-            console.log('Кликнули именно в бекдроп!!!')
-            onCloseModal();
-        }
-    }
+    // function onClickPress (event) {
+    // console.log(event.code);
+    // const ESC_KEY_CODE = 'click';
+    // // const isEscKey = event.code === ESC_KEY_CODE
     
-    function onClickPress (event) {
-    console.log(event.code);
-    const ESC_KEY_CODE = 'click';
-    const isEscKey = event.code === ESC_KEY_CODE
+    // if (ESC_KEY_CODE){
+    // onCloseModal();
+    // }
+    // }
     
-    if (isEscKey ){
-    onCloseModal();
-    }
-    }
-    
+// ========================================
+
+
+// const modal = basicLightbox.create(`<img src="${galleryItems.original} width="800" height="600">`);
+// modal.show;
+
+// if(modal.visile()) {
+// window.addEventListener("keydown", onPressKeyESC);
+// window.addEventListener('click', mouseClick);
+// }
+
+
+// function onPressKeyESC(evt) {
+//   if(evt.code ==='Escape'){
+//   modal.close();
+//   window.removeEventListener("keydown", onPressKeyESC);
+// }
+// }
+
+// function mouseClick(evt){
+//   if(evt.cod === 'click'){
+//   modal.close();
+//   window.removeEventListener('click', mouseClick);
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// =========================================
+
+
+//     const gallery = document.querySelector('.gallary');
+
+// const template = ({preview, original, description}) => 
+// ` <div class="gallery__item">
+// <a class="gallery__link" href="${original}">
+// <img
+// class="gallery__image"
+// src="${preview}"
+// alt="${description}"
+// />
+// </a>
+// </div>`;
+
+// const render = (array) => {
+//   const items = array.reduce((acc, item) => (acc += template(item)));
+//   gallery.innerHTML(items);
+
+// };
+
+// render(galleryItems);
+
+// new SimpleLightbox('.gallery a', {
+//   captionDelay: 100,
+//   captionData: "alt",
+// })
