@@ -1,19 +1,20 @@
-import { galleryItems } from './gallery-items.js';
+import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-const palettContainer = document.querySelector('.gallery');
+const palettContainer = document.querySelector(".gallery");
 
 const cardsMarkup = createImageCardsMarkup(galleryItems);
 
-palettContainer.insertAdjacentHTML('beforeend', cardsMarkup);
+palettContainer.insertAdjacentHTML("beforeend", cardsMarkup);
 
-palettContainer.addEventListener('click', onOpenOriginalImage);
+palettContainer.addEventListener("click", onOpenOriginalImage);
 
 // Эта фунция отвечает за созание разметки
 
-function createImageCardsMarkup (galleryItems) { 
-    return galleryItems.map(({preview, original, description}) => {
-    return `
+function createImageCardsMarkup(galleryItems) {
+  return galleryItems
+    .map(({ preview, original, description }) => {
+      return `
    <div class="gallery__item">
   <a class="gallery__link" href="${original}">
   <img
@@ -25,34 +26,31 @@ function createImageCardsMarkup (galleryItems) {
 </a>
 </div>
     `;
-    }).join('');
-    }
+    })
+    .join("");
+}
 
-// Эта фунция отвечает за вызов basicLightbox
+// Эта фунция отвечает за вызов basicLightbox  и т.д. хахахахахахах 
 
-    function onOpenOriginalImage (event) {
-      event.preventDefault();
+function onOpenOriginalImage(event) {
+  event.preventDefault();
 
-      if (event.target.classList.contains('gallery__image')){
-        let instanse = basicLightbox.create(
-          `<img src= ${event.target.dataset.source} width="800" height="600">`,{
-        onClose: instanse => {
+  if (event.target.classList.contains("gallery__image")) {
+    let instanse = basicLightbox.create(
+      `<img src= ${event.target.dataset.source} width="800" height="600">`,
+      {
+        onClose: (instanse) => {
           window.removeEventListener("keydown", onPressKeyESC);
-        } });
-        instanse.src = event.target.dataset.source
-        instanse.show()
-        window.addEventListener("keydown", onPressKeyESC, { once: true } );
-        function onPressKeyESC(evt) {
-          if(evt.code ==='Escape'){
-            instanse.close();
-        }
-        }
-        }
-        }
-
-
-   
-
-
-
-
+        },
+      }
+    );
+    instanse.src = event.target.dataset.source;
+    instanse.show();
+    window.addEventListener("keydown", onPressKeyESC, { once: true });
+    function onPressKeyESC(evt) {
+      if (evt.code === "Escape") {
+        instanse.close();
+      }
+    }
+  }
+}

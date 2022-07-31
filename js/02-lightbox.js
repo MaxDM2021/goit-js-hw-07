@@ -4,6 +4,8 @@ const palettContainer = document.querySelector(".gallery");
 const cardsMarkup = createImageCardsMarkup(galleryItems);
 palettContainer.insertAdjacentHTML("beforeend", cardsMarkup);
 
+// debugger;
+
 // Эта фунция отвечает за созание разметки
 
 function createImageCardsMarkup(galleryItems) {
